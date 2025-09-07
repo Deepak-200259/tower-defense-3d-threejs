@@ -1,0 +1,51 @@
+{
+    "fireWizard": {
+        "title": "Fire Wizard Tower",
+        "price": 100,
+        "image": "./assets/fireWizard.png",
+        "description": "The Fire Wizard Tower hurls searing flames at your enemies, dealing high DPS with splash damage.",
+        "features": [
+            "Fireball Damage",
+            "Damage Per Second: 100",
+            "Damage Type: Splash",
+            "Splash Radius: 2 ",
+            "Maximum Level: 2"
+        ]
+    },
+    "cannonDefense": {
+        "title": "Cannon Defense Tower",
+        "price": 75,
+        "image": "./assets/fireWizard.png",
+        "description": "Archer Tower delivers precise ranged attacks...",
+        "features": [
+            "Arrow Damage: 20",
+            "Range: Long",
+            "Attack Speed: Medium",
+            "Maximum Level: 3"
+        ]
+    },
+    "freezeDefense": {
+        "title": "Freeze Defense Tower",
+        "price": 75,
+        "image": "./assets/fireWizard.png",
+        "description": "Freeze Tower delivers precise ranged attacks...",
+        "features": [
+            "Arrow Damage: 30",
+            "Range: Long",
+            "Attack Speed: Medium",
+            "Maximum Level: 3"
+        ]
+    },
+    "xBowDefense": {
+        "title": "X-Bow Defense Tower",
+        "price": 75,
+        "image": "./assets/fireWizard.png",
+        "description": "Freeze Tower delivers precise ranged attacks...",
+        "features": [
+            "Arrow Damage: 30",
+            "Range: Long",
+            "Attack Speed: Medium",
+            "Maximum Level: 3"
+        ]
+    }
+}
