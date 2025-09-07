@@ -25,6 +25,11 @@ export default class Camera {
         this.controls = new OrbitControls(this.instance, this.canvas);
         // this.controls.enabled = false;
         this.controls.enableDamping = false;
+        this.controls.mouseButtons = {
+            LEFT: THREE.MOUSE.ROTATE,
+            MIDDLE: THREE.MOUSE.DOLLY,
+            RIGHT: null // disable right click completely
+        };
         // this.controls.dampingFactor = 0.1; // Smoother controls
         // this.controls.screenSpacePanning = false;
 
@@ -45,8 +50,9 @@ export default class Camera {
                 this.controls.minPolarAngle = Math.PI / 3.5;
                 this.controls.maxAzimuthAngle = -Math.PI / 180 * 45;
                 this.controls.minAzimuthAngle = -Math.PI / 180 * 135;
-                this.controls.maxZoom = 20;
-                this.controls.minZoom = 12;
+                this.controls.minDistance = 12;
+                this.controls.enablePan = false;
+                this.controls.maxDistance = 30;
             },
             onUpdate: () => {
                 this.instance.lookAt(new THREE.Vector3(0, 0, 0))

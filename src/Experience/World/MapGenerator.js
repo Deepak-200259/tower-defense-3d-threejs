@@ -9,6 +9,7 @@ import Foundation from './Blocks/Foundation.js'
 import Boundary from './Blocks/Boundary.js'
 import Grass from './Blocks/Grass.js'
 import House from './Blocks/Houses.js'
+import Portal from './Blocks/Portal.js'
 
 export default class MapGenerator {
     constructor(levelData) {
@@ -94,6 +95,8 @@ export default class MapGenerator {
             }
         })
 
+        this.portal = new Portal(pathPositions[0])
+
         new Ground({ position: { x: 0, z: 0 } });
         new Grass(1000, pathPositions);
         Grass.combineIntoInstancedMeshes(this.experience.scene)
@@ -137,5 +140,6 @@ export default class MapGenerator {
 
     update() {
         this.towers.forEach(tower => tower.update());
+        this.portal && this.portal.update()
     }
 }
