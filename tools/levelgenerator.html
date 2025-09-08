@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tower Defense Grid Generator</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #1e1e2f;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      h1 {
+        text-align: center;
+        padding: 20px;
+        margin: 0;
+        background: #27293d;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Start screen */
+      .start-screen {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .start-card {
+        background: #2f3249;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        text-align: center;
+      }
+
+      .start-card input {
+        width: 70px;
+        padding: 8px;
+        margin: 0 8px;
+        border: none;
+        border-radius: 6px;
+        text-align: center;
+        font-size: 16px;
+      }
+
+      .start-card button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #4cafef;
+        color: #fff;
+        transition: 0.2s;
+      }
+
+      .start-card button:disabled {
+        background: #555;
+        cursor: not-allowed;
+      }
+
+      .start-card button:hover:enabled {
+        background: #3a8fd6;
+      }
+
+      /* Main app layout */
+      .app {
+        flex: 1;
+        display: none;
+        flex-direction: row;
+        height: calc(100vh - 70px);
+      }
+
+      /* Grid */
+      .grid-container {
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #202233;
+      }
+
+      .grid {
+        display: grid;
+        gap: 3px;
+        position: relative;
+      }
+
+      .cell {
+        background: #ddd;
+        cursor: pointer;
+        transition: background 0.2s;
+        position: relative;
+      }
+
+      .cell-number {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        font-size: 12px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .grass {
+        background: #4caf50;
+      }
+
+      .tower {
+        background: #ffeb3b;
+      }
+
+      .base {
+        background: #ff9800;
+      }
+
+      .path {
+        background: #9e9e9e;
+      }
+
+      /* Additional types */
+      .tree {
+        background: #2e7d32;
+      }
+
+      .stone {
+        background: #757575;
+      }
+
+      .home {
+        background: #8d6e63;
+      }
+
+      .castle {
+        background: #673ab7;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 220px;
+        background: #2f3249;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow-y: auto;
+      }
+
+      .sidebar button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        background: #3a3d5c;
+        color: #fff;
+        transition: 0.2s;
+        text-align: left;
+      }
+
+      .sidebar button:hover {
+        background: #4c5072;
+      }
+
+      .sidebar button.active {
+        background: #4cafef;
+        color: #fff;
+      }
+
+      /* Angle popup */
+      #angle-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #2f3249;
+        padding: 20px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        text-align: center;
+      }
+
+      #angle-popup h3 {
+        margin: 0 0 15px 0;
+        font-size: 18px;
+        color: #fff;
+      }
+
+      #angle-popup .angle-btns {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      #angle-popup .angle-btn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 6px;
+        background: #4cafef;
+        color: #fff;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      #angle-popup .angle-btn:hover {
+        background: #3a8fd6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>🏰 Tower Defense JSON Generator</h1>
+
+    <!-- Start screen -->
+    <div class="start-screen">
+      <div class="start-card">
+        <h2>Enter Grid Size</h2>
+        <div>
+          Width: <input type="number" id="width" min="1" value="0" /> Height:
+          <input type="number" id="height" min="1" value="0" />
+        </div>
+        <button id="generate" disabled>Generate Grid</button>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #444" />
+
+        <h3>Or Upload JSON Map</h3>
+        <button id="upload-btn">📂 Upload JSON</button>
+        <input
+          type="file"
+          id="upload"
+          accept="application/json"
+          style="display: none"
+        />
+      </div>
+    </div>
+
+    <!-- App -->
+    <div class="app">
+      <div class="grid-container">
+        <div class="grid" id="grid"></div>
+      </div>
+      <div class="sidebar">
+        <button data-type="grass">🌱 Grass</button>
+        <button data-type="tower">🏰 Tower</button>
+        <button data-type="base">🏭 Base</button>
+        <button data-type="path">🛣️ Path</button>
+        <button data-type="tree">🌳 Tree</button>
+        <button data-type="stone">🪨 Stone</button>
+        <button data-type="home">🏠 Home</button>
+        <button data-type="castle">🏯 Castle</button>
+        <button data-type="erase">🧽 Erase</button>
+        <button data-type="move-path">🛤️ MOVE PATH POINTS</button>
+
+        <button id="fill-all">🎨 Fill Grid</button>
+        <button id="clear-all">🧹 Clear Grid</button>
+        <button id="download">⬇️ Download JSON</button>
+      </div>
+    </div>
+
+    <!-- Angle popup -->
+    <div id="angle-popup">
+      <h3>Select Angle</h3>
+      <div class="angle-btns">
+        <button class="angle-btn" data-angle="-90">-90°</button>
+        <button class="angle-btn" data-angle="0">0°</button>
+        <button class="angle-btn" data-angle="90">90°</button>
+        <button class="angle-btn" data-angle="180">180°</button>
+      </div>
+    </div>
+
+    <script>
+      const grid = document.getElementById("grid");
+      const generateBtn = document.getElementById("generate");
+      const widthInput = document.getElementById("width");
+      const heightInput = document.getElementById("height");
+      const startScreen = document.querySelector(".start-screen");
+      const app = document.querySelector(".app");
+      const buildingButtons = document.querySelectorAll(
+        ".sidebar button[data-type]"
+      );
+      const fillAllBtn = document.getElementById("fill-all");
+      const clearAllBtn = document.getElementById("clear-all");
+      const downloadBtn = document.getElementById("download");
+
+      const anglePopup = document.getElementById("angle-popup");
+      const angleButtons = document.querySelectorAll(".angle-btn");
+
+      let isMouseDown = false;
+      let currentBuilding = "grass";
+      let rows = 0,
+        cols = 0;
+
+      let movePathMode = false;
+      let pathPoints = []; // array of {x, z, angle, number}
+
+      let nextPathNumber = 1;
+      let currentCellForAngle = null;
+
+      // Enable button only if valid input
+      [widthInput, heightInput].forEach((input) => {
+        input.addEventListener("input", () => {
+          generateBtn.disabled = !(
+            widthInput.value > 0 && heightInput.value > 0
+          );
+        });
+      });
+
+      // Building button selection
+      buildingButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const type = btn.dataset.type;
+          if (type === "move-path") {
+            movePathMode = !movePathMode;
+            buildingButtons.forEach((b) => b.classList.remove("active"));
+            if (movePathMode) btn.classList.add("active");
+          } else {
+            currentBuilding = type;
+            buildingButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            movePathMode = false;
+          }
+        });
+      });
+
+      function setCellType(r, c, type) {
+        const idx = r * cols + c;
+        const cell = grid.children[idx];
+        if (!cell) return;
+        cell.className = "cell " + type;
+        delete cell.dataset.isCastleTopLeft;
+
+        // Remove number overlay if changing type from path
+        if (type !== "path") {
+          const numberEl = cell.querySelector(".cell-number");
+          if (numberEl) numberEl.remove();
+          // Also remove from pathPoints if exists
+          pathPoints = pathPoints.filter((p) => !(p.x === c && p.z === r));
+        }
+      }
+
+      function placeBuilding(cell) {
+        const index = Array.from(grid.children).indexOf(cell);
+        const z = Math.floor(index / cols);
+        const x = index % cols;
+
+        if (currentBuilding === "castle") {
+          for (let dz = 0; dz < 4; dz++) {
+            for (let dx = 0; dx < 3; dx++) {
+              const nx = x + dx;
+              const nz = z + dz;
+              if (nx < cols && nz < rows) {
+                const castleCell = grid.children[nz * cols + nx];
+                castleCell.className = "cell castle";
+              }
+            }
+          }
+          grid.children[z * cols + x].dataset.isCastleTopLeft = "true";
+        } else if (currentBuilding === "erase") {
+          cell.className = "cell grass";
+          const numberEl = cell.querySelector(".cell-number");
+          if (numberEl) numberEl.remove();
+          pathPoints = pathPoints.filter((p) => !(p.x === x && p.z === z));
+        } else {
+          cell.className = "cell " + currentBuilding;
+        }
+      }
+
+      function createGrid(r, c) {
+        grid.innerHTML = "";
+        rows = r;
+        cols = c;
+
+        const gridHeight =
+          document.querySelector(".grid-container").clientHeight - 20;
+        const cellSize = Math.floor(gridHeight / rows) || 20;
+
+        grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}px)`;
+        grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+
+        for (let i = 0; i < r; i++) {
+          for (let j = 0; j < c; j++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell", "grass");
+
+            cell.addEventListener("click", () => {
+              if (movePathMode) handleMovePathClick(cell);
+              else placeBuilding(cell);
+            });
+
+            cell.addEventListener("mouseenter", () => {
+              if (isMouseDown && !movePathMode) placeBuilding(cell);
+            });
+
+            grid.appendChild(cell);
+          }
+        }
+      }
+
+      document.body.addEventListener("mousedown", () => (isMouseDown = true));
+      document.body.addEventListener("mouseup", () => (isMouseDown = false));
+
+      fillAllBtn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".cell")
+          .forEach((cell) => placeBuilding(cell));
+      });
+
+      clearAllBtn.addEventListener("click", () => {
+        document.querySelectorAll(".cell").forEach((cell) => {
+          cell.className = "cell grass";
+          const numberEl = cell.querySelector(".cell-number");
+          if (numberEl) numberEl.remove();
+        });
+        pathPoints = [];
+        nextPathNumber = 1;
+      });
+
+      generateBtn.addEventListener("click", () => {
+        startScreen.style.display = "none";
+        app.style.display = "flex";
+        createGrid(parseInt(heightInput.value), parseInt(widthInput.value));
+        document.querySelector('[data-type="grass"]').classList.add("active");
+      });
+
+      // ------------------- Move Path Logic -------------------
+      function handleMovePathClick(cell) {
+        if (!cell.classList.contains("path")) {
+          alert("You can only add points on path cells!");
+          return;
+        }
+
+        const index = Array.from(grid.children).indexOf(cell);
+        const z = Math.floor(index / cols);
+        const x = index % cols;
+
+        const existingPoint = pathPoints.find((p) => p.x === x && p.z === z);
+        currentCellForAngle = cell;
+        anglePopup.style.display = "block";
+      }
+
+      angleButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const angle = parseInt(btn.dataset.angle);
+          if (!currentCellForAngle) return;
+          const index = Array.from(grid.children).indexOf(currentCellForAngle);
+          const z = Math.floor(index / cols);
+          const x = index % cols;
+
+          let point = pathPoints.find((p) => p.x === x && p.z === z);
+          if (point) {
+            // Modify angle
+            point.angle = angle;
+          } else {
+            // New point
+            point = { x, z, angle, number: nextPathNumber };
+            pathPoints.push(point);
+
+            // Add number overlay
+            const numEl = document.createElement("div");
+            numEl.className = "cell-number";
+            numEl.textContent = nextPathNumber;
+            currentCellForAngle.appendChild(numEl);
+
+            nextPathNumber++;
+          }
+
+          anglePopup.style.display = "none";
+          currentCellForAngle = null;
+        });
+      });
+
+      // ------------------- JSON Download -------------------
+      downloadBtn.addEventListener("click", () => {
+        const data = {
+          width: cols,
+          height: rows,
+          grid: [],
+          pathPoints: pathPoints.map((p) => ({
+            x: p.x,
+            z: p.z,
+            number: p.number,
+            angle: p.angle,
+          })),
+        };
+
+        const cells = document.querySelectorAll(".cell");
+        cells.forEach((cell, index) => {
+          const i = Math.floor(index / cols);
+          const j = index % cols;
+
+          let type = [...cell.classList].find((c) => c !== "cell");
+          if (!type) type = "grass";
+
+          if (type === "castle" && !cell.dataset.isCastleTopLeft) return;
+
+          data.grid.push({
+            position: { x: j, z: i },
+            type,
+          });
+        });
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], {
+          type: "application/json",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "grid.json";
+        a.click();
+      });
+
+      // ------------------- Upload -------------------
+      const uploadInput = document.getElementById("upload");
+      const uploadBtn = document.getElementById("upload-btn");
+
+      uploadBtn.addEventListener("click", () => uploadInput.click());
+
+      uploadInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          try {
+            const data = JSON.parse(ev.target.result);
+
+            let targetWidth = data.width;
+            let targetHeight = data.height;
+
+            if (
+              (!Number.isInteger(targetWidth) ||
+                !Number.isInteger(targetHeight)) &&
+              Array.isArray(data.grid)
+            ) {
+              let maxX = -Infinity,
+                maxZ = -Infinity;
+              data.grid.forEach((entry) => {
+                let x, z;
+                if (entry.position) {
+                  x = entry.position.x;
+                  z = entry.position.z;
+                } else {
+                  x = entry.x;
+                  z = entry.z;
+                }
+                if (typeof x === "number") maxX = Math.max(maxX, x);
+                if (typeof z === "number") maxZ = Math.max(maxZ, z);
+              });
+              if (maxX > -Infinity && maxZ > -Infinity) {
+                targetWidth = maxX + 1;
+                targetHeight = maxZ + 1;
+              }
+            }
+
+            if (
+              !Number.isInteger(targetWidth) ||
+              !Number.isInteger(targetHeight) ||
+              targetWidth <= 0 ||
+              targetHeight <= 0
+            ) {
+              alert(
+                "JSON must include valid width and height, or grid entries with positions."
+              );
+              return;
+            }
+
+            startScreen.style.display = "none";
+            app.style.display = "flex";
+            createGrid(parseInt(targetHeight, 10), parseInt(targetWidth, 10));
+
+            data.grid.forEach((cellData) => {
+              let x, z, type;
+              if (cellData.position && typeof cellData.position === "object") {
+                x = cellData.position.x;
+                z = cellData.position.z;
+                type = cellData.type;
+              } else return;
+              const idx = z * cols + x;
+              const cell = grid.children[idx];
+              if (cell) {
+                cell.className = "cell " + type;
+                if (type === "castle") cell.dataset.isCastleTopLeft = "true";
+              }
+            });
+
+            if (data.pathPoints && Array.isArray(data.pathPoints)) {
+              pathPoints = [];
+              nextPathNumber = 1;
+
+              data.pathPoints.forEach((p) => {
+                const cell = grid.children[p.z * cols + p.x];
+                if (!cell) return;
+                const newPoint = {
+                  x: p.x,
+                  z: p.z,
+                  angle: p.angle,
+                  number: nextPathNumber,
+                };
+                pathPoints.push(newPoint);
+
+                const numEl = document.createElement("div");
+                numEl.className = "cell-number";
+                numEl.textContent = nextPathNumber;
+                cell.appendChild(numEl);
+
+                nextPathNumber++;
+              });
+            }
+          } catch (err) {
+            alert("Invalid JSON file.");
+            console.error(err);
+          }
+        };
+        reader.readAsText(file);
+      });
+    </script>
+  </body>
+</html>

@@ -1,110 +1,118 @@
-🏰 Tower Defense - 3D - ThreeJS
+# 🏰 Tower Defense - 3D - ThreeJS
 
-A 3D Tower Defense Game built with Three.js, featuring wave-based enemies, towers, coins, and HUD management. The game uses a custom JSON-based map generation system for easy level creation.
+A **3D Tower Defense Game** built with **Three.js**, featuring wave-based enemies, towers, coins, and HUD management.  
+The game uses a **custom JSON-based map generation system** for easy level creation.
 
-⚙️ Map Generation Tool
+---
 
-This project comes with a JSON Map Generation Tool that allows you to design maps visually and export them as JSON.
-The JSON is directly used by the game for spawning paths, decorations, and map elements.
+## ⚙️ Map Generation Tool
 
-JSON Structure:
+This project comes with a **JSON Map Generation Tool** that allows you to:
 
-Path: Defines the route enemies will take.
+- Design maps visually.
+- Export them as JSON for direct use in the game.
+- Spawn paths, decorations, and map elements automatically.
 
-Angles: Define how enemies turn at corners:
+### 🔄 JSON Upload Support
 
-0° → Top → Down
+- Users can **upload an already created JSON** from the tool.
+- Alternatively, you can **manually create JSON** of the required format (cells, positions, pathPoints, etc.).
+- Once uploaded, the tool will **render the corresponding map visually**, allowing quick iteration and validation.
 
--90° → Right → Left
+---
 
-90° → Left → Right
+## 📑 JSON Structure
 
-180° → Bottom → Up
+### Path
 
-Placeable Elements:
+Defines the route enemies will take.
 
-🪨 Stones
+### Angles
 
-🌲 Trees
+Define how enemies turn at corners:
 
-🏰 Castle
+- **0°** → Top → Down
+- **-90°** → Right → Left
+- **90°** → Left → Right
+- **180°** → Bottom → Up
 
-⛉ Boundaries
+### Placeable Elements
 
-🏠 Houses
-
-🗼 Towers
+- 🪨 **Stones**
+- 🌲 **Trees**
+- 🏰 **Castle**
+- ⛉ **Boundaries**
+- 🏠 **Houses**
+- 🗼 **Towers**
 
 Enemies will strictly follow the defined path and rotate based on the angle values in the JSON.
 
-🕹️ Game Structure
-GameConfig.js
+---
+
+## 🕹️ Game Structure
+
+### `GameConfig.js`
 
 Holds all configuration data:
 
-Enemies → Speed, health, rewards, damage, etc.
+- **Enemies** → Speed, health, rewards, damage, etc.
+- **Defenses** → Tower stats, attack ranges, damage values, costs.
+- **Wave Handling** → Enemy types, spawn count, delays per wave.
 
-Defenses → Tower stats, attack ranges, damage values, costs.
-
-Wave Handling → Enemy types, spawn count, delays per wave.
-
-world.js
+### `World.js`
 
 Handles wave generation:
 
-Easily define new waves by adding:
+- **count** → Number of enemies
+- **type** → Enemy type
+- **delay** → Time between spawns
 
-count → Number of enemies
+---
 
-type → Enemy type
+## 🛡️ Towers & Economy
 
-delay → Time between spawns
+- Players can **purchase and sell towers**.
+- Currently supports **a single tower**, but other types are already scaffolded and can be added easily.
 
-🛡️ Towers & Economy
+### `CoinsManager.js`
 
-Players can purchase and sell towers.
+- Handles all additions/subtractions of coins.
+- Updates directly on the HUD.
 
-Currently supports a single tower, but other tower types are already scaffolded and can be added easily (scalable system).
+---
 
-coinsManager:
+## 📊 HUD & Gameplay Info
 
-Handles all additions/subtractions of coins.
+The **HUDManager** updates and displays important game info:
 
-Updates directly on the HUD.
+- 💰 **Coins** → Real-time update when earning/spending.
+- ❤️ **Main Tower Health** → Decreases when enemies reach the base.
+- 👾 **Enemies** → Spawned based on `World.js` wave data.
 
-📊 HUD & Gameplay Info
+Enemies:
 
-HUDManager updates and displays important info:
+- Follow the path defined in the JSON.
+- Rotate at corners according to the angle defined in JSON.
 
-💰 Coins (real-time update when earning/spending).
+---
 
-❤️ Main Tower Health (decreases when enemies reach the base).
+## 🚀 Features
 
-👾 Enemies
+- ✅ JSON-based Map Creation Tool
+- ✅ Upload & Visualize Existing JSON Maps
+- ✅ Path-based Enemy Movement
+- ✅ Real-Time HUD (Coins & Health)
+- ✅ Wave Management System
+- ✅ Tower Placement, Selling, Buying
+- ✅ Scalable for Multiple Towers & Enemies
 
-Enemies are spawned according to waves defined in world.js.
+---
 
-They follow the path defined in the JSON file created by the tool.
+## 🏗️ Scalability
 
-At each corner, enemies rotate according to the angle in the JSON.
+The game is designed to be **easily extensible**:
 
-🚀 Features
-
-✅ JSON-based Map Creation Tool
-✅ Path-based Enemy Movement
-✅ Real-Time HUD (Coins & Health)
-✅ Wave Management System
-✅ Tower Placement, Selling, Buying
-✅ Scalable for Multiple Towers & Enemies
-
-🏗️ Scalability
-
-The game is designed to be easily extensible:
-
-Add more towers with different attack types.
-
-Define new enemies with unique abilities.
-
-Create complex maps using the JSON tool.
-
-Adjust game balance in a single config file (GameConfig.js).
+- Add more towers with different attack types.
+- Define new enemies with unique abilities.
+- Create complex maps using the JSON tool.
+- Adjust game balance in a single config file (`GameConfig.js`).
