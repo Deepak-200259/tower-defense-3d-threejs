@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import Experience from '../../Experience.js'
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import HealthBar from '../HealthBar/HealthBar.js';
-import { ENEMIES_STATS } from '../../Configs/GameConfig.js';
+import { ENEMIES_STATS } from '../GameConfig.js';
 
 export default class GoblimonEnemy {
     static spawnedEnemies = 0;

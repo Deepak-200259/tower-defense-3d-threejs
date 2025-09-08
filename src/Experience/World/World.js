@@ -12,7 +12,7 @@ import DemogorgonEnemy from './Enemies/DemogorgonEnemy.js'
 import FloramonEnemy from './Enemies/FloramonEnemy.js'
 import CoinsManager from './CoinsManager.js'
 import HUDManager from './HUDManager.js'
-import { ENEMIES_STATS, WAVES_INFO } from '../Configs/GameConfig.js'
+import { ENEMIES_STATS, WAVES_INFO } from './GameConfig.js'
 // import BombermanEnemy from './Enemies/BombermanEnemy.js'
 // import FireWizard from './Defenders/FireWizard.js'
 

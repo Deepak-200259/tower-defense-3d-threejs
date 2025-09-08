@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import Experience from '../../Experience.js'
 import mergeModelToSingleGeometry from '../../Utils/UtilityFunctions.js'
-import { STONE_SCALING } from '../../Configs/GameConfig.js'
+import { STONE_SCALING } from '../GameConfig.js'
 
 export default class Stones {
     static instances = [];

@@ -1,4 +1,4 @@
-import { DEFENSES_STATS } from "../Configs/GameConfig";
+import { DEFENSES_STATS } from "../World/GameConfig";
 
 export default class UIManager {
   updateCardsPopup(

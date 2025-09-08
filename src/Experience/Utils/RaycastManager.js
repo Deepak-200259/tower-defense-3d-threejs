@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
-import { DEFENSE_TYPES, MIN_AMOUNT_REQUIRED_TO_BUILD } from '../Configs/GameConfig.js'
+import { DEFENSE_TYPES, MIN_AMOUNT_REQUIRED_TO_BUILD } from '../World/GameConfig.js'
 
 export default class RaycastManager {
     constructor() {

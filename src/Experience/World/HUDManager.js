@@ -1,4 +1,4 @@
-import { INITIAL_COINS_AMOUNT, INITIAL_TOWER_HEALTH } from "../Configs/GameConfig";
+import { INITIAL_COINS_AMOUNT, INITIAL_TOWER_HEALTH } from "./GameConfig";
 import Experience from "../Experience";
 
 export default class HUDManager {

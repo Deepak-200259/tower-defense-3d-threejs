@@ -5,7 +5,7 @@ import FireWizard from '../Defenses/FireWizard.js'
 import CannonDefense from '../Defenses/CannonDefense.js'
 import FreezeDefense from '../Defenses/FreezeDefense.js'
 import XBowDefense from '../Defenses/XBowDefense.js'
-import { CANNON_RANGE, DEFENSES_STATS } from '../../Configs/GameConfig.js'
+import { CANNON_RANGE, DEFENSES_STATS } from '../GameConfig.js'
 
 export default class Tower {
     static allTowers = [] // store all created towers

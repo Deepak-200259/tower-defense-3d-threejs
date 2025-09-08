@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from '../../Experience.js'
-import { TREES_SCALING } from '../../Configs/GameConfig.js'
+import { TREES_SCALING } from '../GameConfig.js'
 import mergeModelToSingleGeometry from '../../Utils/UtilityFunctions.js'
 export default class Trees {
     static instances = [] // keep track of all created Trees

@@ -1,4 +1,4 @@
-import { INITIAL_COINS_AMOUNT } from "../Configs/GameConfig";
+import { INITIAL_COINS_AMOUNT } from "./GameConfig";
 import Experience from "../Experience";
 
 export default class CoinsManager {

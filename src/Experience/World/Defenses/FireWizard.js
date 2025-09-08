@@ -2,7 +2,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import Experience from "../../Experience.js";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
-import { DEFENSES_STATS } from "../../Configs/GameConfig.js";
+import { DEFENSES_STATS } from "../GameConfig.js";
 
 export default class FireWizard {
     constructor({ attackRange = DEFENSES_STATS.FIRE_WIZARD.ATTACK_RANGE,

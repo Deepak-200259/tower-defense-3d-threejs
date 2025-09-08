@@ -9,9 +9,9 @@ export default class LevelManager {
     async load() {
         if (this.levelData) return 
 
-        const response = await fetch('./Experience/Configs/LevelData.json')
+        const response = await fetch('./configs/LevelData.json')
         this.levelData = await response.json()
-        const towersDataResponse = await fetch('./Experience/Configs/TowersData.json')
+        const towersDataResponse = await fetch('./configs/TowersData.json')
         this.towersData = await towersDataResponse.json()
         this.movePath = this.levelData.pathPoints
         // return this.levelData
