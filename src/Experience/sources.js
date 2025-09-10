@@ -123,6 +123,11 @@ export default [
         path: 'models/Defenders/wizard.glb'
     },
     {
+        name: 'dragonEnemy',
+        type: 'gltfModel',
+        path: 'models/Enemies/dragon-enemy.glb'
+    },
+    {
         name: 'foundation',
         type: 'gltfModel',
         path: 'models/Foundation/Foundation.glb'
@@ -203,5 +208,25 @@ export default [
         name: 'door',
         type: 'gltfModel',
         path: 'models/Buildings/Door.glb'
+    },
+    {
+        name: 'spiked_cannon_ball',
+        type: 'gltfModel',
+        path: 'models/spike_ball_internal_crystal.glb'
+    },
+    {
+        name: 'base_flame',
+        type: 'texture',
+        path: 'textures/fire/base_flame.png'
+    },
+    {
+        name: 'bright_flame',
+        type: 'texture',
+        path: 'textures/fire/bright_flame.png'
+    },
+    {
+        name: 'ember',
+        type: 'texture',
+        path: 'textures/fire/ember.png'
     },
 ]

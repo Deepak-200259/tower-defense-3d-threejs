@@ -78,11 +78,11 @@ export default class GaurdamonEnemy {
         }
 
         // Play death animation once
-        this.animation.play('down')
+        this.animation.play('death')
 
         // Dispose when death anim finishes
         this.animation.mixer.addEventListener("finished", (e) => {
-            if (this.animation.actions.current === this.animation.actions.down) {
+            if (this.animation.actions.current === this.animation.actions.death) {
                 this.experience.world.coinsManager.addToCurrentAmount(ENEMIES_STATS.GAURDAMON.KILL_COINS);
                 //("Disposing Gaurdamon...");
                 GaurdamonEnemy.spawnedEnemies--;
@@ -136,7 +136,7 @@ export default class GaurdamonEnemy {
         this.animation.actions.damage = this.animation.mixer.clipAction(this.resource.animations[1])
         this.animation.actions.win = this.animation.mixer.clipAction(this.resource.animations[2])
         this.animation.actions.move = this.animation.mixer.clipAction(this.resource.animations[3])
-        this.animation.actions.down = this.animation.mixer.clipAction(this.resource.animations[4])
+        this.animation.actions.death = this.animation.mixer.clipAction(this.resource.animations[4])
         this.animation.actions.getup = this.animation.mixer.clipAction(this.resource.animations[5])
         this.animation.actions.attack = this.animation.mixer.clipAction(this.resource.animations[6])
 
@@ -151,7 +151,7 @@ export default class GaurdamonEnemy {
 
             if (newAction && newAction !== oldAction) {
                 newAction.reset()
-                if (name === 'down') {
+                if (name === 'death') {
                     newAction.clampWhenFinished = true
                     newAction.setLoop(THREE.LoopOnce)
                 }
@@ -168,7 +168,7 @@ export default class GaurdamonEnemy {
                 playDamage: () => this.animation.play('damage'),
                 playWin: () => this.animation.play('win'),
                 playMove: () => this.animation.play('move'),
-                playDown: () => this.animation.play('down'),
+                playDeath: () => this.animation.play('death'),
                 playGetup: () => this.animation.play('getup'),
                 playAttack: () => this.animation.play('attack'),
             }
@@ -176,7 +176,7 @@ export default class GaurdamonEnemy {
             this.debugFolder.add(debugObject, 'playDamage')
             this.debugFolder.add(debugObject, 'playWin')
             this.debugFolder.add(debugObject, 'playMove')
-            this.debugFolder.add(debugObject, 'playDown')
+            this.debugFolder.add(debugObject, 'playDeath')
             this.debugFolder.add(debugObject, 'playGetup')
             this.debugFolder.add(debugObject, 'playAttack')
         }

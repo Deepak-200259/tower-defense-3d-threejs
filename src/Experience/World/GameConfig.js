@@ -1,9 +1,11 @@
-export const DEFENSE_TYPES = [
-    'fireWizard',
-    // 'cannonDefense',
-    // 'freezeDefense', 
-    // 'xBowDefense'
-];
+export const DEFENSE_TYPES = {
+
+    FIRE_WIZARD: 'fireWizard',
+    CANNON_DEFENSE: 'cannonDefense',
+    //FREEZE_TOWER: 'freezeDefense', 
+    //X_BOX_DEFENSE: 'xBowDefense'
+}
+;
 
 export const TREES_SCALING = {
     0: 0.5,
@@ -50,6 +52,36 @@ export const DEFENSES_STATS = {
             LV1: {
                 UPGRADE_COST: "Upgrade Cost: " + 200,
                 SELL_AMOUNT: "Sell Amount: " + 80,
+                STAT_INCREASE: "Attack Speed : 1.15",
+            },
+            LV2: {
+                UPGRADE_COST: null,
+                SELL_AMOUNT: "Sell Amount: " + 150,
+                STAT_INCREASE: null
+            }
+        }
+    },
+    CANNON_DEFENSE: {
+        ATTACK_DAMAGE: 120,
+        ATTACK_RANGE: 4,
+        DAMAGE_RADIUS: 1,
+        TIME_TAKEN_TO_REACH_TARGET: 25, // ms
+        ATTACK_SPEED: {
+            LV1: 0.5,
+            LV2: 1.15,
+        },
+        BUILDING_COST: {
+            LV1: 130,
+            LV2: 300,
+        },
+        SELL_AMOUNT: {
+            LV_1: 120,
+            LV_2: 250
+        },
+        UPGRADE_POPUP_INFO: {
+            LV1: {
+                UPGRADE_COST: "Upgrade Cost: " + 250,
+                SELL_AMOUNT: "Sell Amount: " + 120,
                 STAT_INCREASE: "Attack Speed : 1.15",
             },
             LV2: {
@@ -131,5 +163,12 @@ export const ENEMIES_STATS = {
         KILL_COINS: 150,
         SPEED: 0.5,
         SCALE: 0.5,
+    },
+    DRAGON: {
+        HEALTH: 25000,
+        DAMAGE_PER_SECOND: 100,
+        KILL_COINS: 200,
+        SPEED: 10,
+        SCALE: 0.025,
     }
 }

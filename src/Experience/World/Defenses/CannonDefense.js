@@ -1,13 +1,16 @@
 import * as THREE from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import Experience from "../../Experience.js";
+import { DEFENSES_STATS } from "../GameConfig.js";
+import CannonBall from "../Bullet/CannonBall.js";
 
 export default class CannonDefense {
     constructor({
-        attackRange = 30,
+        attackRange = DEFENSES_STATS.CANNON_DEFENSE.ATTACK_RANGE,
         scale = 1,
         positionX = 0,
-        positionZ = 0
+        positionZ = 0,
+        level = 1
     }) {
         this.experience = new Experience();
         this.scene = this.experience.scene;
@@ -18,19 +21,19 @@ export default class CannonDefense {
         if (this.debug.active) {
             this.debugFolder = this.debug.ui.addFolder("Cannon");
         }
-
         this.targets = [];
         this.attackRange = attackRange;
         this.scale = scale;
         this.positionX = positionX;
         this.positionZ = positionZ;
 
-        this.currentLevel = 1; // default
+        this.cannonBall = new CannonBall();
+        this.currentLevel = level; // default
         this.setModel();
-
-        setTimeout(() => {
-            this.updateLevel(2)
-        }, 5000);
+        this.isReached = false;
+        // setTimeout(() => {
+        //     this.updateLevel(2)
+        // }, 5000);
     }
 
     setModel() {
@@ -55,7 +58,7 @@ export default class CannonDefense {
         });
     }
 
-    disposeModel() {
+    dispose() {
         if (!this.model) return;
 
         this.scene.remove(this.model);
@@ -79,7 +82,7 @@ export default class CannonDefense {
     updateLevel(newLevel) {
         if (newLevel === this.currentLevel) return;
 
-        this.disposeModel();
+        this.dispose();
         this.currentLevel = newLevel;
         this.setModel();
     }
@@ -90,6 +93,8 @@ export default class CannonDefense {
 
         for (let target of this.targets) {
             if (!target) continue;
+            if (target.userData.scriptInstance.animation.actions.current == target.userData.scriptInstance.animation.actions.death)
+                continue;
             const dist = this.model.position.distanceTo(target.position);
             if (dist < minDist && dist <= maxRange) {
                 minDist = dist;
@@ -97,5 +102,25 @@ export default class CannonDefense {
             }
         }
         return nearest;
+    }
+
+    setIsReached(nearestEnemy) {
+        this.isReached = false;
+        nearestEnemy.userData.scriptInstance.takeDamage(DEFENSES_STATS.CANNON_DEFENSE.ATTACK_DAMAGE);
+    }
+
+    update() {
+        const nearestEnemy = this.findNearestTarget()
+        if (nearestEnemy) {
+            // console.log(nearestEnemy.userData.scriptInstance.animation , nearestEnemy.userData.scriptInstance.animation);
+
+            if (nearestEnemy.userData.scriptInstance.animation.actions.current != nearestEnemy.userData.scriptInstance.animation.actions.death) {
+                this.model.lookAt(new THREE.Vector3(nearestEnemy.position.x, this.model.position.y, nearestEnemy.position.z));
+                if (!this.isReached) {
+                    this.cannonBall.launch(this.model.position, nearestEnemy.position, 1, 2, this.setIsReached.bind(this, nearestEnemy));
+                    this.isReached = true;
+                }
+            }
+        }
     }
 }

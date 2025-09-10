@@ -1,0 +1,691 @@
+{
+  "width": 10,
+  "height": 10,
+  "grid": [
+    {
+      "position": {
+        "x": 0,
+        "z": 0
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 0
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 0
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 0
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 0
+      },
+      "type": "tree"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 0
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 7,
+        "z": 0
+      },
+      "type": "castle"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 1
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 1
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 1
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 1
+      },
+      "type": "tree"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 1
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 1
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 1
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 2
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 2
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 2
+      },
+      "type": "tower"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 2
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 2
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 2
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 2
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 3
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 3
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 3
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 3
+      },
+      "type": "stone"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 3
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 3
+      },
+      "type": "tower"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 3
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 4
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 4
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 4
+      },
+      "type": "tree"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 4
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 4
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 4
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 4
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 7,
+        "z": 4
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 8,
+        "z": 4
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 9,
+        "z": 4
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 5
+      },
+      "type": "tower"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 5
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 5
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 5
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 5
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 5
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 5
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 7,
+        "z": 5
+      },
+      "type": "tree"
+    },
+    {
+      "position": {
+        "x": 8,
+        "z": 5
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 9,
+        "z": 5
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 6
+      },
+      "type": "stone"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 6
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 6
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 6
+      },
+      "type": "tower"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 6
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 6
+      },
+      "type": "tree"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 6
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 7,
+        "z": 6
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 8,
+        "z": 6
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 9,
+        "z": 6
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 7
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 7
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 7
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 7
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 7
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 7
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 7
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 7,
+        "z": 7
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 8,
+        "z": 7
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 9,
+        "z": 7
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 8
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 8
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 8
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 8
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 8
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 8
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 8
+      },
+      "type": "path"
+    },
+    {
+      "position": {
+        "x": 7,
+        "z": 8
+      },
+      "type": "tower"
+    },
+    {
+      "position": {
+        "x": 8,
+        "z": 8
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 9,
+        "z": 8
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 0,
+        "z": 9
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 1,
+        "z": 9
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 2,
+        "z": 9
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 3,
+        "z": 9
+      },
+      "type": "tree"
+    },
+    {
+      "position": {
+        "x": 4,
+        "z": 9
+      },
+      "type": "home"
+    },
+    {
+      "position": {
+        "x": 5,
+        "z": 9
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 6,
+        "z": 9
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 7,
+        "z": 9
+      },
+      "type": "grass"
+    },
+    {
+      "position": {
+        "x": 8,
+        "z": 9
+      },
+      "type": "tree"
+    },
+    {
+      "position": {
+        "x": 9,
+        "z": 9
+      },
+      "type": "grass"
+    }
+  ],
+  "pathPoints": [
+    {
+      "x": 0,
+      "z": 2,
+      "number": 1,
+      "angle": 90
+    },
+    {
+      "x": 1,
+      "z": 2,
+      "number": 2,
+      "angle": 0
+    },
+    {
+      "x": 1,
+      "z": 7,
+      "number": 3,
+      "angle": 90
+    },
+    {
+      "x": 3,
+      "z": 7,
+      "number": 4,
+      "angle": 0
+    },
+    {
+      "x": 3,
+      "z": 8,
+      "number": 5,
+      "angle": 90
+    },
+    {
+      "x": 6,
+      "z": 8,
+      "number": 6,
+      "angle": 180
+    },
+    {
+      "x": 6,
+      "z": 4,
+      "number": 7,
+      "angle": -90
+    },
+    {
+      "x": 4,
+      "z": 4,
+      "number": 8,
+      "angle": 0
+    },
+    {
+      "x": 4,
+      "z": 1,
+      "number": 9,
+      "angle": 90
+    },
+    {
+      "x": 6,
+      "z": 1,
+      "number": 10,
+      "angle": 90
+    }
+  ]
+}

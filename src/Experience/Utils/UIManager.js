@@ -1,4 +1,4 @@
-import { DEFENSES_STATS } from "../World/GameConfig";
+import { DEFENSE_TYPES, DEFENSES_STATS } from "../World/GameConfig";
 
 export default class UIManager {
   updateCardsPopup(
@@ -12,13 +12,16 @@ export default class UIManager {
     const itemsContainer = document.querySelector('.card-container');
     if (!itemsContainer) return;
 
+    callback(false);
     // Clear old cards first
     itemsContainer.innerHTML = '';
-
-    requiredItems.forEach((itemKey, index) => {
+    console.log(Object.keys(requiredItems), Object.values(requiredItems));
+    
+    Object.values(requiredItems).forEach((itemKey, index) => {
       const itemInfo = itemsInfo[itemKey];
       if (!itemInfo) return;
-
+      console.log(itemInfo);
+      
       // Build card element
       const card = document.createElement('div');
       card.className = 'card';
@@ -62,12 +65,11 @@ export default class UIManager {
     });
 
     // Show container after filling
-    itemsContainer.style.display = requiredItems.length ? 'grid' : 'none';
+    itemsContainer.style.display = Object.values(requiredItems).length ? 'grid' : 'none';
   }
 
-  showUpgradeTowerPopup(name, level, upgradeCallBack, removeCallback, restartRaycastCallback) {
-    console.log(level);
-
+  showUpgradeTowerPopup(name, level, upgradeCallBack, removeCallback, raycastCallback) {
+    raycastCallback(false);
     const container = document.querySelector(".upgrade-popup-overlay");
     const upgradeButton = document.querySelector('.upgrade-popup-card-upgrade');
     const removeButton = document.querySelector('.upgrade-popup-card-remove');
@@ -78,14 +80,23 @@ export default class UIManager {
 
     container.style.display = 'flex';
     upgradeButton.style.display = 'flex';
-
-    if (name == 'fireWizard') {
+    console.log(name);
+    if (name == DEFENSE_TYPES.FIRE_WIZARD) {
       if (level === 1) {
         sellAmount.textContent = DEFENSES_STATS.FIRE_WIZARD.UPGRADE_POPUP_INFO.LV1.SELL_AMOUNT;
         upgradeCost.textContent = DEFENSES_STATS.FIRE_WIZARD.UPGRADE_POPUP_INFO.LV1.UPGRADE_COST;
         statIncrease.textContent = DEFENSES_STATS.FIRE_WIZARD.UPGRADE_POPUP_INFO.LV1.STAT_INCREASE;
       } else {
         sellAmount.textContent = DEFENSES_STATS.FIRE_WIZARD.UPGRADE_POPUP_INFO.LV2.SELL_AMOUNT;
+        upgradeButton.style.display = 'none';
+      }
+    } else if (name == 'cannonDefense') {
+      if (level === 1) {
+        sellAmount.textContent = DEFENSES_STATS.CANNON_DEFENSE.UPGRADE_POPUP_INFO.LV1.SELL_AMOUNT;
+        upgradeCost.textContent = DEFENSES_STATS.CANNON_DEFENSE.UPGRADE_POPUP_INFO.LV1.UPGRADE_COST;
+        statIncrease.textContent = DEFENSES_STATS.CANNON_DEFENSE.UPGRADE_POPUP_INFO.LV1.STAT_INCREASE;
+      } else {
+        sellAmount.textContent = DEFENSES_STATS.CANNON_DEFENSE.UPGRADE_POPUP_INFO.LV2.SELL_AMOUNT;
         upgradeButton.style.display = 'none';
       }
     }
@@ -109,7 +120,7 @@ export default class UIManager {
       upgradeButton.removeEventListener('click', onUpgradeClick);
       removeButton.removeEventListener('click', onRemoveClick);
       closeButton.removeEventListener('click', onCloseClick);
-      restartRaycastCallback(true);
+      raycastCallback(true);
     };
 
     // ✅ bind listeners directly, no .bind(this)

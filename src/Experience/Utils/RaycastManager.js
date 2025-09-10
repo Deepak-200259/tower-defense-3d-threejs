@@ -32,9 +32,8 @@ export default class RaycastManager {
     handleRaycast() {
         this.raycaster.setFromCamera(this.pointer, this.camera)
         const intersects = this.raycaster.intersectObjects(this.experience.triggerableObjects);
-
+        // this.isEnabled = true;
         if (intersects.length > 0) {
-            this.isEnabled = false;
             const intersectedObject = intersects[0].object;
             const positionofObject = intersectedObject.userData.script.position
             if (intersectedObject.name === 'defensive_tower') {
@@ -47,8 +46,9 @@ export default class RaycastManager {
                     this.setEnabled.bind(this)
                 )
             }
-
-            if (this.experience.world.coinsManager.getCurrentAmount() < MIN_AMOUNT_REQUIRED_TO_BUILD) return;
+            if (this.experience.world.coinsManager.getCurrentAmount() < MIN_AMOUNT_REQUIRED_TO_BUILD) {
+                return;
+            }
             if (this.experience.world.coinsManager.getCurrentAmount() <= 0) return;
             if (intersectedObject.name === 'foundation') {
                 this.experience.uiManager.updateCardsPopup(DEFENSE_TYPES,

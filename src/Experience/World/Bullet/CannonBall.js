@@ -27,24 +27,20 @@ export default class CannonBall {
     constructor() {
         this.experience = new Experience();
         this.scene = this.experience.scene;
-
-        this.createBall();
-        this.createParticles();
+        this.resource = this.experience.resources.items.spiked_cannon_ball;
     }
 
-    createBall() {
-        const geometry = new THREE.SphereGeometry(0.1, 32, 32);
-        this.material = new THREE.MeshStandardMaterial({
-            color: 0xff5500,
-            emissive: 0xff2200,
-            emissiveIntensity: 2,
-            roughness: 0.3,
-            metalness: 0.1,
-        });
-
-        this.mesh = new THREE.Mesh(geometry, this.material);
+    createBall(position) {
+        this.mesh = this.resource.scene.clone()
+        this.mesh.scale.set(0.005, 0.005, 0.005)
+        this.mesh.position.copy(position)
         this.scene.add(this.mesh);
-
+        this.mesh.traverse((child)=>{
+            if(child instanceof THREE.Mesh){
+                child.castShadow = true;
+                child.material.color = new THREE.Color(0x555555);
+            }
+        })
         gsap.to(this.material, {
             emissiveIntensity: 4,
             duration: 0.3,
@@ -105,26 +101,28 @@ export default class CannonBall {
         }
     }
 
-    launch(start, end, speed = 5, height = 5) {
+    launch(start, end, duration = 1.5, height = 5, callback) {
+        this.createBall(start);
+        this.createParticles();
+
         this.mesh.position.copy(start);
-        this.mesh.scale.set(1, 1, 1);
+        // this.mesh.scale.set(1, 1, 1);
 
-        gsap.fromTo(this.mesh.scale, { x: 0.2, y: 0.2, z: 0.2 }, {
-            x: 1, y: 1, z: 1,
-            duration: 0.3,
-            ease: "back.out(2)"
-        });
+        // gsap.fromTo(this.mesh.scale, { x: 0.2, y: 0.2, z: 0.2 }, {
+        //     x: 1, y: 1, z: 1,
+        //     duration: 0.3,
+        //     ease: "back.out(2)"
+        // });
 
-        const distance = start.distanceTo(end);
-        const duration = distance / speed;
         const tempVec = new THREE.Vector3();
-
-        if (this.tween) this.tween.kill();
         const data = { t: 0 };
+
+        // Kill previous tween if still running
+        if (this.tween) this.tween.kill();
 
         this.tween = gsap.to(data, {
             t: 1,
-            duration,
+            duration, // constant travel time
             ease: "none",
             onUpdate: () => {
                 const t = data.t;
@@ -136,8 +134,48 @@ export default class CannonBall {
                 // spawn a few particles per frame
                 for (let i = 0; i < 2; i++) this.spawnParticle(tempVec);
             },
+            onComplete: () => {
+                if (callback) callback();
+                this.dispose();
+            }
         });
     }
+
+
+    dispose() {
+        // Kill GSAP tweens
+        if (this.tween) {
+            this.tween.kill();
+            this.tween = null;
+        }
+        gsap.killTweensOf(this.material);
+
+        // Remove ball mesh
+        if (this.mesh) {
+            if (this.mesh.geometry) this.mesh.geometry.dispose();
+            if (this.mesh.material) this.mesh.material.dispose();
+
+            this.scene.remove(this.mesh);
+            this.mesh = null;
+        }
+
+        // Remove particle system
+        if (this.points) {
+            if (this.points.geometry) this.points.geometry.dispose();
+            if (this.particleMaterial) {
+                if (this.particleMaterial.map) this.particleMaterial.map.dispose();
+                this.particleMaterial.dispose();
+            }
+
+            this.scene.remove(this.points);
+            this.points = null;
+        }
+
+        // Clear arrays
+        this.particles = [];
+        this.positions = null;
+    }
+
 
     update() {
         // Update particle motion

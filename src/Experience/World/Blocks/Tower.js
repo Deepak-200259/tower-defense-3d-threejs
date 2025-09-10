@@ -5,12 +5,12 @@ import FireWizard from '../Defenses/FireWizard.js'
 import CannonDefense from '../Defenses/CannonDefense.js'
 import FreezeDefense from '../Defenses/FreezeDefense.js'
 import XBowDefense from '../Defenses/XBowDefense.js'
-import { CANNON_RANGE, DEFENSES_STATS } from '../GameConfig.js'
+import { CANNON_RANGE, DEFENSE_TYPES, DEFENSES_STATS } from '../GameConfig.js'
 
 export default class Tower {
     static allTowers = [] // store all created towers
 
-    constructor({ position = { x: 0, z: 0 }, name = 'fireWizard' }) {
+    constructor({ position = { x: 0, z: 0 }, name = DEFENSE_TYPES.FIRE_WIZARD }) {
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
@@ -25,7 +25,7 @@ export default class Tower {
         // store this tower for later batching
         Tower.allTowers.push(this)
 
-        if (name === 'fireWizard') {
+        if (name === DEFENSE_TYPES.FIRE_WIZARD) {
             this.fireWizard = new FireWizard({
                 attackRange: DEFENSES_STATS.FIRE_WIZARD.ATTACK_RANGE,
                 positionX: this.position.x,
@@ -37,12 +37,12 @@ export default class Tower {
         }
         else if (name === 'cannonDefense') {
             this.cannonDefense = new CannonDefense({
-                attackRange: CANNON_RANGE,
+                attackRange: DEFENSES_STATS.CANNON_DEFENSE.ATTACK_RANGE,
                 positionX: this.position.x,
                 positionZ: this.position.z,
                 scale: 0.25
             })
-            this.coinsManager.subtractFromCurrentAmount(COST_OF_BUILDINGS.CANNON_TOWER);
+            this.coinsManager.subtractFromCurrentAmount(DEFENSES_STATS.CANNON_DEFENSE.BUILDING_COST.LV1);
         }
         else if (name === 'freezeDefense') {
             this.freezeDefense = new FreezeDefense({
@@ -80,12 +80,19 @@ export default class Tower {
 
     disposeTower() {
         console.log(this);
-        if (this.defenseName === 'fireWizard') {
+        if (this.defenseName === DEFENSE_TYPES.FIRE_WIZARD) {
             const level = this.fireWizard.currentLevel;
             if (level == 1) {
                 this.experience.world.coinsManager.addToCurrentAmount(DEFENSES_STATS.FIRE_WIZARD.SELL_AMOUNT.LV_1);
             } else {
                 this.experience.world.coinsManager.addToCurrentAmount(DEFENSES_STATS.FIRE_WIZARD.SELL_AMOUNT.LV_2);
+            }
+        } else if (this.defenseName === 'cannonDefense') {
+            const level = this.cannonDefense.currentLevel;
+            if (level == 1) {
+                this.experience.world.coinsManager.addToCurrentAmount(DEFENSES_STATS.CANNON_DEFENSE.SELL_AMOUNT.LV_1);
+            } else {
+                this.experience.world.coinsManager.addToCurrentAmount(DEFENSES_STATS.CANNON_DEFENSE.SELL_AMOUNT.LV_2);
             }
         }
         this.scene.remove(this.model)
@@ -98,8 +105,13 @@ export default class Tower {
         })
         // remove from the list
         Tower.allTowers = Tower.allTowers.filter(tower => tower !== this)
-        this.fireWizard?.dispose()
-        this.fireWizard = null
+        if (this.defenseName === DEFENSE_TYPES.FIRE_WIZARD) {
+            this.fireWizard?.dispose()
+            this.fireWizard = null
+        } else if( this.defenseName === 'cannonDefense'){
+            this.cannonDefense?.dispose()
+            this.cannonDefense = null
+        }
         this.experience.world.mapGenerator.setupFoundation({ position: this.position })
         this.experience.triggerableObjects = this.experience.triggerableObjects.filter(value => value != this.model);
     }
@@ -169,5 +181,6 @@ export default class Tower {
 
     update() {
         this.fireWizard && this.fireWizard.update()
+        this.cannonDefense && this.cannonDefense.update()
     }
 }
